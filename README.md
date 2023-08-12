@@ -9,7 +9,8 @@ Tiny functions that extend python json-like objects functionality as highly cust
 
 operations on json-like python objects(lists, dicts)
 
->Provided as python library and made to be used from python directly
+>Only python 3.10+ supported
+>Provided as python library and made to be used from python directly. 
 
 Inspired by:
 - [jmespath](https://jmespath.org)
