@@ -40,5 +40,3 @@ def deep_traverse(o, path):
     o = O(o)
     path = [listitem(p) for p in path]
     return functools.reduce(lambda current, p: p.traverse(current), path, o)
-
-deep_traverse({1:1}, [])

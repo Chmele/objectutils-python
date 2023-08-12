@@ -29,9 +29,3 @@ def deep_traverse(o, path):
             return type(p)([deep_traverse(o, (key, *rest)) for key in keys])
         case p if callable(p): return p(deep_traverse(o, rest))
         case _: return deep_traverse(o[p], rest)
-
-
-pg = PathGroup
-deep_traverse({1:{4:1}, 2:{3:{4:4}, 5:5}}, 
-   [sum, pg([1, 4], [2, 5])]
-)

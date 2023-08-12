@@ -25,9 +25,3 @@ def deep_traverse(o, path):
         return o
     except TypeError:
         return deep_traverse(o[p], rest)
-
-
-pg = PathGroup
-deep_traverse({1:{4:1}, 2:{3:{4:4}, 5:{4:4}}}, 
-    [2, [], 4]
-)
