@@ -1,5 +1,6 @@
 from functools import singledispatch
-from typing import Callable
+from types import FunctionType
+from types import BuiltinFunctionType
 
 
 def get_all_keys(iter):
@@ -35,20 +36,14 @@ def traverse_item(p, o):
 
 @traverse_item.register
 def _(p: list, o):
-    keys = p or get_all_keys(o)
-    def ret(rest):
-        return type(p)([deep_traverse(o, (key, *rest)) for key in keys])
-    return ret
+    return lambda rest: type(p)([deep_traverse(o, (key, *rest)) for key in p or get_all_keys(o)])
 
 @traverse_item.register
 def _(p: PathGroup, o):
-    def ret(rest):
-        return p.traverse(o, rest)
-    return ret
+    return lambda rest: p.traverse(o, rest)
 
-@traverse_item.register(type(lambda x: x))
-@traverse_item.register(type(sum))
+# @traverse_item.register(type(lambda x: x))
+@traverse_item.register(BuiltinFunctionType)
+@traverse_item.register(FunctionType)
 def _(p: type(deep_traverse), o):
-    def ret(rest):
-        return p(deep_traverse(o, rest))
-    return ret
+    return lambda rest: p(deep_traverse(o, rest))
