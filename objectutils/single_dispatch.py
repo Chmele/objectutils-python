@@ -1,6 +1,5 @@
 from functools import singledispatch
 from types import FunctionType, BuiltinFunctionType
-classtype = type(FunctionType) # Found no way to import <class 'type'> 🙁
 
 
 @singledispatch
@@ -49,7 +48,7 @@ def _(p: list, o):
 def _(p: PathGroup, o):
     return lambda rest: p.traverse(o, rest)
 
-@traverse_item.register(classtype)
+@traverse_item.register(type)
 @traverse_item.register(BuiltinFunctionType)
 @traverse_item.register(FunctionType)
 def _(p, o):
