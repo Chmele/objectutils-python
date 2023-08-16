@@ -1,5 +1,12 @@
 # ```objectutils```
 
+## Installation
+
+```bash
+pip install objectutils
+```
+
+## About
 Tiny functions that extend python json-like objects functionality as highly customizable: 
 
 - diff
@@ -42,9 +49,9 @@ Such expressions getting even worse in more complicated cases.
 With ```deep_traverse``` method provided by this tiny lib you should do the following to get the same ```Counter```:
 
 ```python
-from objutils import deep_traverse
+from objectutils import deep_traverse
 
-c = deep_traverse(a, [Counter, chain.from_iterable, "computers", [], "software"])
+c = deep_traverse(obj, [Counter, chain.from_iterable, "computers", [], "software"])
 ```
 
 ```deep_traverse``` supports callable objects in its path, as well as the keys of object.
