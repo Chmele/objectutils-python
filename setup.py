@@ -1,12 +1,12 @@
 from distutils.core import setup
 
 with open("README.md") as file:
-    ld = file.read
+    ld = file.read()
 
 setup(
   name = 'objectutils',         
   packages = ['objectutils'], 
-  version = '0.1.4',    
+  version = '0.1.5',    
   license='MIT',      
   description = 'Utils that extend default dict|list operations', 
   long_description = ld,
