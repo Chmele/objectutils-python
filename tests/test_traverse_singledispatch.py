@@ -64,3 +64,27 @@ class TestTraverseSingleDispatch(TestCase):
             deep_traverse(a, [sum, 2, pg([5], [6])]),
             11
         )
+
+    def test_class_call(self):
+        a = {"computers": 
+            [
+                {
+                    "computername": "1",
+                    "software": ["s1", "s2"],
+                },
+                {
+                    "computername": "2",
+                    "software": ["s2", "s3"],
+                },
+                {
+                    "computername": "3",
+                    "software": ["s1", "s3"],
+                },
+            ]
+        }
+        from collections import Counter
+        from itertools import chain
+        self.assertEqual(
+            deep_traverse(a, [Counter, chain.from_iterable, "computers", [], "software"]),
+            {"s1": 2, "s2": 2, "s3": 2}
+        )
