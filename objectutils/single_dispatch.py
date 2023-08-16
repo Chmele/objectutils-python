@@ -1,13 +1,20 @@
 from functools import singledispatch
-from types import FunctionType
-from types import BuiltinFunctionType
+from types import FunctionType, BuiltinFunctionType
 
 
+@singledispatch
 def get_all_keys(iter):
-    try:
-        return iter.keys()
-    except AttributeError:
-        return range(len(iter))
+    pass
+    
+@get_all_keys.register(tuple)
+@get_all_keys.register(list)
+def _(key):
+    return range(len(key))
+
+@get_all_keys.register
+def _(key: dict):
+    return key.keys()
+
 
 
 class PathGroup:
@@ -42,8 +49,7 @@ def _(p: list, o):
 def _(p: PathGroup, o):
     return lambda rest: p.traverse(o, rest)
 
-# @traverse_item.register(type(lambda x: x))
 @traverse_item.register(BuiltinFunctionType)
 @traverse_item.register(FunctionType)
-def _(p: type(deep_traverse), o):
+def _(p, o):
     return lambda rest: p(deep_traverse(o, rest))
