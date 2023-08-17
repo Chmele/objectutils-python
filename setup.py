@@ -6,7 +6,7 @@ with open("README.md") as file:
 setup(
   name = 'objectutils',         
   packages = ['objectutils'], 
-  version = '0.1.5',    
+  version = '0.1.6',    
   license='MIT',      
   description = 'Utils that extend default dict|list operations', 
   long_description = ld,

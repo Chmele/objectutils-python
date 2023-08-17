@@ -57,7 +57,7 @@ c = deep_traverse(obj, [Counter, chain.from_iterable, "computers", [], "software
 ```deep_traverse``` supports callable objects in its path, as well as the keys of object.
 ```[]``` considered as all the possible values in iterable, as 'asterisk'(*).
 
-> Only single argument callables supported for now, fallback to unpacking the iterable argument is not provided currently.
+> If applicable, calls the funcs and callable objects with unpacked iterable from the right. On exception that was predicted in this case, tries to call with single argument
 
 As for me, it is much clearer approach than writing comprehensions or loops in such cases.
 
