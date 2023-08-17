@@ -1,5 +1,6 @@
 from objectutils.class_wrapper import T
 from objectutils.single_dispatch import PathGroup as pg
+from objectutils import deep_traverse
 from unittest import TestCase
 
 
@@ -7,7 +8,7 @@ class TestTraverseSingleDispatch(TestCase):
     def test_traverse_dict_pathgroup(self):
         a = T({1: {4: 1}, 2: {3: {4: 4}, 5: 5}})
         self.assertListEqual(
-            a[[pg([1, 4], [2, 3])]],
+            a[pg([1, 4], [2, 3])],
             [1, {4: 4}]
         )
 
@@ -33,7 +34,7 @@ class TestTraverseSingleDispatch(TestCase):
         )
 
         self.assertEqual(
-            a[[]],
+            deep_traverse(a, []),
             a
         )
 

@@ -16,10 +16,9 @@ def _(obj):
 
 class TraverseDict(UserDict):
     def __getitem__(self, key):
-        try:
-            return deep_traverse(self.data, key)
-        except TypeError:
-            return super().__getitem__(key)
+        if not isinstance(key, tuple):
+            key = (key, )
+        return deep_traverse(self.data, key)
         
 
 class TraverseList(UserList):
