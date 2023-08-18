@@ -1,6 +1,6 @@
 from objectutils.class_wrapper import T
-from objectutils.single_dispatch import PathGroup as pg
-from objectutils import deep_traverse
+from objectutils.traverse import PathGroup as pg
+from objectutils import traverse
 from unittest import TestCase
 
 
@@ -34,7 +34,7 @@ class TestTraverseSingleDispatch(TestCase):
         )
 
         self.assertEqual(
-            deep_traverse(a, []),
+            traverse(a, []),
             a
         )
 

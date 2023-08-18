@@ -9,7 +9,7 @@ pip install objectutils
 ## About
 Tiny functions that extend python json-like objects functionality as highly customizable: 
 
-- [traversing](#deep_traverse)
+- [traversing](#traverse)
 - [flattening](#flatten)
 - [sum](#zip_dicts)
 - [diff](#using-as-diff-default-mapping-and-filter)
@@ -47,7 +47,7 @@ obj = {"computers": [
     ]
 }
 ```
-### ```deep_traverse```
+### ```traverse```
 You should write something like that to get the ```Counter``` of the software installed in total:
 
 ```python
@@ -57,15 +57,15 @@ c = Counter(chain.from_iterable([computer["software"] for computer in obj["compu
 ```
 
 Such expressions getting even worse in more complicated cases.
-With ```deep_traverse``` method provided by this tiny lib you should do the following to get the same ```Counter```:
+With ```traverse``` method provided by this tiny lib you should do the following to get the same ```Counter```:
 
 ```python
-from objectutils import deep_traverse
+from objectutils import traverse
 
-c = deep_traverse(obj, [Counter, chain.from_iterable, "computers", [], "software"])
+c = traverse(obj, [Counter, chain.from_iterable, "computers", [], "software"])
 ```
 
-```deep_traverse``` supports callable objects in its path, as well as the keys of object.
+```traverse``` supports callable objects in its path, as well as the keys of object.
 ```[]``` considered as all the possible values in iterable, as 'asterisk'(*).
 
 > If applicable, calls the funcs and callable objects with unpacked iterable from the right. On exception that was predicted in this case, tries to call with single argument
@@ -132,4 +132,4 @@ zip_dicts(d1, d2) # {1: {4: (2, 3)}} - elements on path [1, 4] not equal(2 and 3
 ```
 
 
-The keys are the paths that may be used in ```deep_traverse``` to get the value next to them. However intended usage is to reduce the path somehow, using ```".".join()``` or something like that
+The keys are the paths that may be used in ```traverse``` to get the value next to them. However intended usage is to reduce the path somehow, using ```".".join()``` or something like that
