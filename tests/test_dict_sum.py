@@ -1,4 +1,4 @@
-from objectutils import per_itempair
+from objectutils import zip_dicts
 from unittest import TestCase
 
 
@@ -15,7 +15,7 @@ class TestDictSum(TestCase):
             }
         }
         self.assertEqual(
-            per_itempair(d1, d2),
+            zip_dicts(d1, d2),
             {1: {2: (3, 4)}}
         )
         d1 = {
@@ -33,7 +33,7 @@ class TestDictSum(TestCase):
             }
         }
         self.assertEqual(
-            per_itempair(d1, d2),
+            zip_dicts(d1, d2),
             {1: {2: (3, 4), 4: (2, 3)}}
         )
 
@@ -53,6 +53,6 @@ class TestDictSum(TestCase):
             }
         }
         self.assertEqual(
-            per_itempair(d1, d2, lambda a, b: a+b, lambda a, b: a==b),
+            zip_dicts(d1, d2, lambda a, b: a+b, lambda a, b: a==b),
             {1: {3: 6}}
         )
