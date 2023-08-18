@@ -39,26 +39,24 @@ def _(o):
     } 
 
 
-
-
 def per_itempair(i1, i2, element_mapping=lambda a,b: (a,b), element_filter=lambda a,b: a!=b, **kwargs):
     match i1, i2:
-        case dict(), dict(): return dictsum(i1, i2)
+        case dict(), dict(): return dictsum(i1, i2, element_mapping, element_filter)
         case list(), list(): return listsum(i1, i2)
         case _: return element_mapping(i1, i2) if element_filter(i1, i2) else None
     
 
-def dictsum(d1, d2, per_itempair=per_itempair):
+def dictsum(d1, d2, e_mapping, e_filter, per_itempair=per_itempair):
     return {
         k: value
         for k in set((*d1.keys(), *d2.keys()))
-        if (value := per_itempair(d1.get(k), d2.get(k)))
+        if (value := per_itempair(d1.get(k), d2.get(k), e_mapping, e_filter))
     }
 
 
-def listsum(l1, l2, per_itempair=per_itempair):
+def listsum(l1, l2, e_mapping, e_filter, per_itempair=per_itempair):
     return {
         i: value
         for i, items in enumerate(zip(l1,l2))
-        if (value := per_itempair(*items))
+        if (value := per_itempair(*items, e_mapping, e_filter))
     }

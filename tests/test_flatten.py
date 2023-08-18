@@ -1,4 +1,4 @@
-from objectutils.main import flatten
+from objectutils import flatten
 from unittest import TestCase
 
 
