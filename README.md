@@ -18,7 +18,17 @@ operations on json-like python objects(lists, dicts)
 
 Allows writing comprehensions without comprehensions 🙃
 
-### For example, having the following response from some API:
+>Only python 3.10+ supported
+
+>Provided as python library and made to be used from python directly. 
+
+Inspired by:
+- [jmespath](https://jmespath.org)
+- [jq](https://jqlang.github.io/jq/)
+
+
+## Examples
+### Having the following response from some API:
 
 ```python
 obj = {"computers": [
@@ -37,6 +47,7 @@ obj = {"computers": [
     ]
 }
 ```
+### ```deep_traverse```
 You should write something like that to get the ```Counter``` of the software installed in total:
 
 ```python
@@ -61,11 +72,24 @@ c = deep_traverse(obj, [Counter, chain.from_iterable, "computers", [], "software
 
 As for me, it is much clearer approach than writing comprehensions or loops in such cases.
 
+### ```flatten```
+```python
+from objectutils import flatten
+```
+Use ```flatten(obj)``` to get a flat dictionary in form ```{path: plain value}``` 
+For the data above, the result is the following:
+```python
+{
+    ("computers", 0, "computername"): "1",
+    ("computers", 0, "software", 0): "s1",
+    ("computers", 0, "software", 1): "s2",
+    ("computers", 1, "computername"): "2",
+    ("computers", 1, "software", 0): "s2",
+    ("computers", 1, "software", 1): "s3",
+    ("computers", 2, "computername"): "3",
+    ("computers", 2, "software", 0): "s1",
+    ("computers", 2, "software", 1): "s3",
+}
+```
 
->Only python 3.10+ supported
-
->Provided as python library and made to be used from python directly. 
-
-Inspired by:
-- [jmespath](https://jmespath.org)
-- [jq](https://jqlang.github.io/jq/)
+The keys are the paths that may be used in ```deep_traverse``` to get the value next to them. However intended usage is to reduce the path somehow, using ```".".join()``` or something like that
