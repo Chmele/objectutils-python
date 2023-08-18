@@ -91,5 +91,45 @@ For the data above, the result is the following:
     ("computers", 2, "software", 1): "s3",
 }
 ```
+### ```zip_dicts```
+Used to join values of two similar dicts on same paths. May be used to find a diff betweens two dicts, join values as a sum
+
+```python
+from objectutils import zip_dicts
+
+
+d1 = {
+    1: {
+        2: 3,
+        3: 3,
+    }
+}
+d2 = {
+    1: {
+        2: 4,
+        3: 3,
+    }
+}
+zip_dicts(d1, d2, lambda a, b: a+b, lambda a, b: a==b) # {1: {3: 6}} - "find a sum on all same paths where values are equal"
+```
+Third argument is a function for two items on the same paths, fourth is the filter for leaf dict values. 
+
+#### Using as diff (default mapping and filter)
+```python
+d1 = {
+    1: {
+        3: 3,
+        4: 2,
+    }
+}
+d2 = {
+    1: {
+        3: 3,
+        4: 3,
+    }
+}
+zip_dicts(d1, d2) # {1: {4: (2, 3)}} - elements on path [1, 4] not equal(2 and 3 correspondingly)
+```
+
 
 The keys are the paths that may be used in ```deep_traverse``` to get the value next to them. However intended usage is to reduce the path somehow, using ```".".join()``` or something like that
