@@ -10,14 +10,14 @@ def fallback(mapping=None):
                 return func(*args, **kwargs)
             try:
                 return mapping[type(exception)](*args, **kwargs)
-            except Exception as e:
+            except Exception:
                 raise exception
         return wrapper 
     return dec
 
 
 @singledispatch
-def get_all_keys(iter):
+def get_all_keys(_):
     pass
     
 @get_all_keys.register(tuple)

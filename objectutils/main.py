@@ -14,7 +14,7 @@ def recursion_level(func):
     return wrapper
 
 @singledispatch
-def get_keyvalue(o):
+def get_keyvalue(_):
     pass
 
 @get_keyvalue.register(dict)
@@ -45,7 +45,7 @@ def _(o):
 def zip_dicts(i1, i2, element_mapping=lambda a,b: (a,b), element_filter=lambda a,b: a!=b, **kwargs):
     match i1, i2:
         case dict(), dict(): return dictsum(i1, i2, element_mapping, element_filter)
-        case list(), list(): return listsum(i1, i2)
+        case list(), list(): return listsum(i1, i2, element_mapping, element_filter)
         case _: return element_mapping(i1, i2) if element_filter(i1, i2) else None
     
 
