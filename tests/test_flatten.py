@@ -45,3 +45,16 @@ class TestFlatten(TestCase):
                 (3, 0): 1
             }
         )
+    
+    def test_flatten_lambda(self):
+        a = [1,2,3, [1]]
+        func = lambda seq: '.'.join(str(item) for item in seq)
+        self.assertEqual(
+            flatten(a, func),
+            {
+                "0": 1,
+                "1": 2,
+                "2": 3,
+                "3.0": 1
+            }
+        )
