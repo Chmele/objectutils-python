@@ -84,4 +84,4 @@ def process_func_item(p, o):
 def process_dict_item(p, o):
     return lambda rest: {key: traverse(o, (*item, *rest)) for key, item in p.items()}
 
-traverse({1:{2:3}}, [ {2:[1]} ])
+# traverse({1:{2:3}}, [ {2:{3:[1, 2]}} ])
