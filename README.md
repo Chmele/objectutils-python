@@ -10,7 +10,7 @@ pip install objectutils
 Tiny functions that extend python json-like objects functionality as highly customizable: 
 
 - [traversing](#traverse)
-- [transforming](#transformation)
+- [transformation](#transformation)
 - [flattening](#flatten)
 - [sum](#zip_dicts)
 - [diff](#using-as-diff-default-mapping-and-filter)
@@ -107,12 +107,13 @@ For the data above, the result is the following:
     ("computers", 2, "software", 1): "s3",
 }
 ```
+The keys are the paths that may be used in ```traverse``` to get the value next to them. However intended usage is to reduce the path somehow, using ```".".join()``` or something like that. The second argument is a function that will be applied to result keys.
+
 ### ```zip_dicts```
 Used to join values of two similar dicts on same paths. May be used to find a diff betweens two dicts, join values as a sum
 
 ```python
 from objectutils import zip_dicts
-
 
 d1 = {
     1: {
@@ -146,6 +147,3 @@ d2 = {
 }
 zip_dicts(d1, d2) # {1: {4: (2, 3)}} - elements on path [1, 4] not equal(2 and 3 correspondingly)
 ```
-
-
-The keys are the paths that may be used in ```traverse``` to get the value next to them. However intended usage is to reduce the path somehow, using ```".".join()``` or something like that
