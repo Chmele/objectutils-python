@@ -9,10 +9,10 @@ pip install objectutils
 ## About
 Tiny functions that extend python json-like objects functionality as highly customizable: 
 
-- diff
-- sum
-- flattening
-- traversing 
+- [traversing](#deep_traverse)
+- [flattening](#flatten)
+- [sum](#zip_dicts)
+- [diff](#using-as-diff-default-mapping-and-filter)
 
 operations on json-like python objects(lists, dicts)
 
