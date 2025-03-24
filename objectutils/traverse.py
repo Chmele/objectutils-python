@@ -75,8 +75,13 @@ def unpacked_args_handler(p, o):
 @traverse_item.register(BuiltinFunctionType)
 @traverse_item.register(FunctionType)
 @fallback({
-        TypeError: unpacked_args_handler
-    })
+    TypeError: unpacked_args_handler
+})
 def process_func_item(p, o):
     return lambda rest: p(*traverse(o, rest))
 
+@traverse_item.register(dict)
+def process_dict_item(p, o):
+    return lambda rest: {key: traverse(o, (*item, *rest)) for key, item in p.items()}
+
+traverse({1:{2:3}}, [ {2:[1]} ])
