@@ -1,5 +1,17 @@
-from objectutils import traverse, PathGroup as pg
+from objectutils import traverse, PathGroup as pg, recursion_level
 from unittest import TestCase
+
+
+class TestRecursionLevelDecorator(TestCase):
+    @recursion_level
+    def recursive_function(self, n, depth=0):
+        if n <= 0:
+            return depth
+        return self.recursive_function(n - 1, depth=depth)
+
+    def test_recursion_level(self):
+        result = self.recursive_function(5)
+        self.assertEqual(result, 6, "Incorrect recursion depth")
 
 
 class TestTraverseSingleDispatch(TestCase):

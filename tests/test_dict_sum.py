@@ -2,6 +2,13 @@ from objectutils import zip_dicts
 from unittest import TestCase
 
 
+class TestListSum(TestCase):
+    def test_list_sum_default(self):
+        l1 = [1,2,{}]
+        l2 = [2,3,{}]
+        self.assertEqual(zip_dicts(l1, l2), {0: (1, 2), 1: (2, 3)})
+
+
 class TestDictSum(TestCase):
     def test_dict_sum_default(self):
         d1 = {
