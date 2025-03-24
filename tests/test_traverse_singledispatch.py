@@ -88,3 +88,16 @@ class TestTraverseSingleDispatch(TestCase):
             deep_traverse(a, [Counter, chain.from_iterable, "computers", [], "software"]),
             {"s1": 2, "s2": 2, "s3": 2}
         )
+
+    def test_fallback_call(self):
+        a = {1: [1,2,3,4]}
+        s = lambda *args: sum(args)
+        self.assertEqual(
+            deep_traverse(a, [lambda *args: sum(args), 1]),
+            10
+        )
+        self.assertEqual(
+            deep_traverse(a, [lambda a: sum(a), 1]),
+            10
+        )
+

@@ -1,5 +1,6 @@
 from functools import singledispatch
 from types import FunctionType, BuiltinFunctionType
+from .fallbacks import fallback
 
 
 @singledispatch
@@ -33,23 +34,36 @@ def deep_traverse(o, path):
         p, *rest = path
     except ValueError:
         return o
-    return traverse_item(p, o)(rest)
-        
+    try:
+        return traverse_item(p, o)(rest)
+    except Exception as e:
+        return traverse_item(p, o, exception=e)(rest)
+
 
 @singledispatch
+@fallback()
 def traverse_item(p, o):
     return lambda rest: deep_traverse(o[p], rest)
 
-@traverse_item.register
-def _(p: list, o):
+@traverse_item.register(list)
+@fallback()
+def process_list(p, o):
     return lambda rest: type(p)([deep_traverse(o, (key, *rest)) for key in p or get_all_keys(o)])
 
-@traverse_item.register
-def _(p: PathGroup, o):
+@traverse_item.register(PathGroup)
+@fallback()
+def process_pathgroup(p, o):
     return lambda rest: p.traverse(o, rest)
+
+def unpacked_args_handler(p, o):
+    return lambda rest: p(deep_traverse(o, rest))
 
 @traverse_item.register(type)
 @traverse_item.register(BuiltinFunctionType)
 @traverse_item.register(FunctionType)
-def _(p, o):
-    return lambda rest: p(deep_traverse(o, rest))
+@fallback({
+        TypeError: unpacked_args_handler
+    })
+def process_func_item(p, o):
+    return lambda rest: p(*deep_traverse(o, rest))
+
