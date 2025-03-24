@@ -1,4 +1,4 @@
-import functools
+from functools import singledispatch
 
 
 def recursion_level(func):
@@ -13,20 +13,32 @@ def recursion_level(func):
     func.depth = 0
     return wrapper
 
+@singledispatch
+def get_keyvalue(o):
+    pass
 
-def flatten(d):
-    try: 
-        return {
-            (k, *kinner): vinner
-            for k, v in d.items() 
-                for kinner, vinner in flatten(v).items()
-        } 
-    except AttributeError:
-        return {(): d}
+@get_keyvalue.register(dict)
+def _(o):
+    return o.items()
+
+@get_keyvalue.register(list)
+def _(o):
+    return enumerate(o)
+
+@singledispatch
+def flatten(o):
+    return {(): o}
+
+@flatten.register(dict)
+@flatten.register(list)
+def _(o):
+    return {
+        (k, *kinner): vinner
+        for k, v in get_keyvalue(o)
+            for kinner, vinner in get_keyvalue(flatten(v))
+    } 
 
 
-def traverse_dict_path(d, path):
-    return functools.reduce(lambda cd, s: cd.__getitem__(s), path, d)
 
 
 def per_itempair(i1, i2, element_mapping=lambda a,b: (a,b), element_filter=lambda a,b: a!=b, **kwargs):
