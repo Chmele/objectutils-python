@@ -3,7 +3,7 @@ from collections import UserDict, UserList
 from functools import singledispatch
 
 @singledispatch
-def T(obj):
+def T(_):
     pass
 
 @T.register(dict)
