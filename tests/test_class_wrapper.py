@@ -18,11 +18,12 @@ class TestTraverseSingleDispatch(TestCase):
             [4, 4]
         )
 
-    # def test_traverse_list(self):
-    #     self.assertEqual(
-    #         deep_traverse([1, 2, [1, 2, [1, 2]]], [2, 2, 1]),
-    #         2
-    #     )
+    def test_traverse_list(self):
+        a = T([1, 2, [1, 2, [1, 2]]])
+        self.assertEqual(
+            a[2, 2, 1],
+            2
+        )
     
     def test_dict_traverse_trivial(self):
         a = T({1:{}, 2: {3: 4, 5: 6, 7: 8}})
@@ -39,22 +40,22 @@ class TestTraverseSingleDispatch(TestCase):
         with self.assertRaises(KeyError):
             a[1, 0]
 
-    # def test_list_traverse_trivial(self):
-    #     a = [[], [1], [1, 2]]
-    #     self.assertEqual(
-    #         deep_traverse(a, [2, 1]),
-    #         2
-    #     )
+    def test_list_traverse_trivial(self):
+        a = T([[], [1], [1, 2]])
+        self.assertEqual(
+            a[2, 1],
+            2
+        )
 
-    #     self.assertEqual(
-    #         deep_traverse(a, []),
-    #         a
-    #     )
-    #     with self.assertRaises(IndexError):
-    #         deep_traverse(a, [1, 1])
+        self.assertEqual(
+            a[[]],
+            a
+        )
+        with self.assertRaises(IndexError):
+            a[1, 1]
 
-    #     with self.assertRaises(TypeError):
-    #         deep_traverse(a, [1, 0, 0])
+        with self.assertRaises(TypeError):
+            a[1, 0, 0]
 
     def test_function_call(self):
         a = T({1: {4: 1}, 2: {3: {4: 4}, 5: 5, 6: 6}})
