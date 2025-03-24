@@ -1,27 +1,16 @@
 from distutils.core import setup
+
+with open("README.md") as file:
+    ld = file.read
+
 setup(
   name = 'objectutils',         
   packages = ['objectutils'], 
   version = '0.1.4',    
   license='MIT',      
   description = 'Utils that extend default dict|list operations', 
-  long_description = '''
-Tiny functions that extend python json-like objects functionality as highly customizable: 
-
-- diff
-- sum
-- flattening
-- traversing 
-
-operations on json-like python objects(lists, dicts)
-
->Only python 3.10+ supported
->Provided as python library and made to be used from python directly. 
-
-Inspired by:
-- [jmespath](https://jmespath.org)
-- [jq](https://jqlang.github.io/jq/)
-''',
+  long_description = ld,
+  long_description_content_type = "text/markdown",
   author = 'Chmele',              
   url = 'https://github.com/Chmele/difflib/tree/main',  
   keywords = ['dict', 'json', 'jq', 'jmespath'], 
