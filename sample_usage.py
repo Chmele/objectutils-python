@@ -1,5 +1,5 @@
 from examples.samples import task as correct, task2 as answer
-from src.main import *
+from objectutils.main import *
 
 
 class Mistake:
