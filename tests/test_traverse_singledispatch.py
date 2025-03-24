@@ -1,4 +1,4 @@
-from objectutils.single_dispatch import deep_traverse, PathGroup as pg
+from objectutils import deep_traverse, PathGroup as pg
 from unittest import TestCase
 
 
