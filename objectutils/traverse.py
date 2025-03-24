@@ -1,4 +1,7 @@
 def get_all_keys(iter):
+    """
+    Returns all the values that is suitable for `__getitem__()` method of its arg
+    """
     try:
         return iter.keys()
     except AttributeError:
@@ -6,6 +9,9 @@ def get_all_keys(iter):
 
 
 class PathGroup:
+    """
+    Represents a few alternative paths as a single object
+    """
     def __init__(self, *paths, type=list):
         self.paths = paths
         self.type = type
@@ -17,7 +23,15 @@ class PathGroup:
         return self.type(self.traverse_iter(o, rest))
 
 
-def deep_traverse(o, path):
+def deep_traverse(o: list | dict, path: list) -> list | dict:
+    """
+    Method for traversing object with given path
+
+    Sample usage:
+    ```
+    deep_traverse({1: {4: 1}, 2: {3: {4: 4}, 5: {4: 4}}}, [sum, 2, [], 4]) -> 8 (without 'sum' in path the result is [4, 4])
+    ```
+    """
     try:
         p, *rest = path
     except ValueError:

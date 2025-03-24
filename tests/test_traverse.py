@@ -1,4 +1,4 @@
-from src.traverse import deep_traverse, PathGroup as pg
+from objectutils.traverse import deep_traverse, PathGroup as pg
 from unittest import TestCase
 
 
