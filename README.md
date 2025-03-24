@@ -10,6 +10,7 @@ pip install objectutils
 Tiny functions that extend python json-like objects functionality as highly customizable: 
 
 - [traversing](#traverse)
+- [transforming](#transformation)
 - [flattening](#flatten)
 - [sum](#zip_dicts)
 - [diff](#using-as-diff-default-mapping-and-filter)
@@ -71,6 +72,21 @@ c = traverse(obj, [Counter, chain.from_iterable, "computers", [], "software"])
 > If applicable, calls the funcs and callable objects with unpacked iterable from the right. On exception that was predicted in this case, tries to call with single argument
 
 As for me, it is much clearer approach than writing comprehensions or loops in such cases.
+
+### Transformation
+It is also possible to transform the data selected by traverse using dicts on the path, but this may be a bit tricky:
+```python
+traverse(
+    {"old1": {"old2": "old3"}, "old4": "old5"}, 
+    [
+        {"new2": []}, 
+        [{"new3": ["old1", "old2"], "new4": ["old4"]}, 
+        {"anothernew4": ["old4"]}]
+    ]
+)
+
+#Result {'new2': [{'new3': 'old3', 'new4': 'old5'}, {'anothernew4': 'old5'}]}
+```
 
 ### ```flatten```
 ```python
