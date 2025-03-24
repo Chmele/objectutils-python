@@ -25,12 +25,15 @@ def _(o):
 def _(o):
     return enumerate(o)
 
+def flatten(o, f=lambda x: x):
+    return {f(k): v for k, v in _flatten(o).items()}
+
 @singledispatch
-def flatten(o):
+def _flatten(o):
     return {(): o}
 
-@flatten.register(dict)
-@flatten.register(list)
+@_flatten.register(dict)
+@_flatten.register(list)
 def _(o):
     return {
         (k, *kinner): vinner
